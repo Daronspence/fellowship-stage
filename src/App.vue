@@ -40,37 +40,37 @@ export default {
       singers: [
         {
           name: 'Taylor Siemens',
-          avatar: 'https://i.pravatar.cc/120',
+          avatar: 'https://api.adorable.io/avatars/120/',
           mic: 'lead'
         },
         {
           name: 'Alexandria Duarte',
-          avatar: 'https://i.pravatar.cc/130',
+          avatar: 'https://api.adorable.io/avatars/130/',
           mic: 'bgv2'
         },
         {
           name: 'Sarah Roffler',
-          avatar: 'https://i.pravatar.cc/121',
+          avatar: 'https://api.adorable.io/avatars/121/',
           mic: ''
         },
         {
           name: 'Myles Wren',
-          avatar: 'https://i.pravatar.cc/131',
+          avatar: 'https://api.adorable.io/avatars/131/',
           mic: 'bgv3'
         },
         {
           name: 'Taylor Denton',
-          avatar: 'https://i.pravatar.cc/132',
+          avatar: 'https://api.adorable.io/avatars/132/',
           mic: 'bgv1'
         },
         {
           name: 'Kraig Loyd',
-          avatar: 'https://i.pravatar.cc/122',
+          avatar: 'https://api.adorable.io/avatars/122/',
           mic: 'co-lead'
         },
         {
           name: 'Jason Jackson II',
-          avatar: 'https://i.pravatar.cc/140',
+          avatar: 'https://api.adorable.io/avatars/140/',
           mic: ''
         }
       ],
@@ -78,32 +78,32 @@ export default {
         {
           name: 'Joel',
           instrument: 'bass',
-          avatar: 'https://i.pravatar.cc/123'
+          avatar: 'https://api.adorable.io/avatars/123/'
         },
         {
           name: 'Zeke',
           instrument: 'pads',
-          avatar: "https://i.pravatar.cc/125"
+          avatar: "https://api.adorable.io/avatars/125/"
         },
         {
           name: 'Gailey',
           instrument: 'violin',
-          avatar: "https://i.pravatar.cc/126"
+          avatar: "https://api.adorable.io/avatars/126/"
         },
         {
           name: 'Nigel',
           instrument: 'piano',
-          avatar: "https://i.pravatar.cc/127"
+          avatar: "https://api.adorable.io/avatars/127/"
         },
         {
           name: 'Emmanuel',
           instrument: 'drums',
-          avatar: "https://i.pravatar.cc/128"
+          avatar: "https://api.adorable.io/avatars/128/"
         },
         {
           name: 'Bob',
           instrument: 'guitar',
-          avatar: "https://i.pravatar.cc/129"
+          avatar: "https://api.adorable.io/avatars/129/"
         }
       ],
       mics: [
