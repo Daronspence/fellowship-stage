@@ -40,37 +40,37 @@ export default {
       singers: [
         {
           name: 'Taylor Siemens',
-          avatar: 'http://i.pravatar.cc/120',
+          avatar: 'https://i.pravatar.cc/120',
           mic: 'lead'
         },
         {
           name: 'Alexandria Duarte',
-          avatar: 'http://i.pravatar.cc/130',
+          avatar: 'https://i.pravatar.cc/130',
           mic: 'bgv2'
         },
         {
           name: 'Sarah Roffler',
-          avatar: 'http://i.pravatar.cc/121',
+          avatar: 'https://i.pravatar.cc/121',
           mic: ''
         },
         {
           name: 'Myles Wren',
-          avatar: 'http://i.pravatar.cc/131',
+          avatar: 'https://i.pravatar.cc/131',
           mic: 'bgv3'
         },
         {
           name: 'Taylor Denton',
-          avatar: 'http://i.pravatar.cc/132',
+          avatar: 'https://i.pravatar.cc/132',
           mic: 'bgv1'
         },
         {
           name: 'Kraig Loyd',
-          avatar: 'http://i.pravatar.cc/122',
+          avatar: 'https://i.pravatar.cc/122',
           mic: 'co-lead'
         },
         {
           name: 'Jason Jackson II',
-          avatar: 'http://i.pravatar.cc/140',
+          avatar: 'https://i.pravatar.cc/140',
           mic: ''
         }
       ],
@@ -78,32 +78,32 @@ export default {
         {
           name: 'Joel',
           instrument: 'bass',
-          avatar: 'http://i.pravatar.cc/123'
+          avatar: 'https://i.pravatar.cc/123'
         },
         {
           name: 'Zeke',
           instrument: 'pads',
-          avatar: "http://i.pravatar.cc/125"
+          avatar: "https://i.pravatar.cc/125"
         },
         {
           name: 'Gailey',
           instrument: 'violin',
-          avatar: "http://i.pravatar.cc/126"
+          avatar: "https://i.pravatar.cc/126"
         },
         {
           name: 'Nigel',
           instrument: 'piano',
-          avatar: "http://i.pravatar.cc/127"
+          avatar: "https://i.pravatar.cc/127"
         },
         {
           name: 'Emmanuel',
           instrument: 'drums',
-          avatar: "http://i.pravatar.cc/128"
+          avatar: "https://i.pravatar.cc/128"
         },
         {
           name: 'Bob',
           instrument: 'guitar',
-          avatar: "http://i.pravatar.cc/129"
+          avatar: "https://i.pravatar.cc/129"
         }
       ],
       mics: [
