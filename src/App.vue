@@ -14,7 +14,7 @@
     </div>
     <div id="singers">
       <draggable v-model="singers" class="flex justify-center py-8 flex-wrap">
-        <singer v-for="(singer, index) in singers" :key="singer.name" :person="singer" :mics="mics" :index="index" :change-mic-value="changeMicValue"></singer>
+        <singer v-for="(singer, index) in singers" :key="singer.name" :person="singer" :mics="mics" :index="index" @change-mic="changeMicValue($event, index)"></singer>
       </draggable>
     </div>
     <stage></stage>
@@ -41,12 +41,12 @@ export default {
         {
           name: 'Taylor Siemens',
           avatar: 'https://api.adorable.io/avatars/120/',
-          mic: 'lead'
+          mic: ''
         },
         {
           name: 'Alexandria Duarte',
           avatar: 'https://api.adorable.io/avatars/130/',
-          mic: 'bgv2'
+          mic: ''
         },
         {
           name: 'Sarah Roffler',
@@ -56,21 +56,16 @@ export default {
         {
           name: 'Myles Wren',
           avatar: 'https://api.adorable.io/avatars/131/',
-          mic: 'bgv3'
+          mic: ''
         },
         {
           name: 'Taylor Denton',
           avatar: 'https://api.adorable.io/avatars/132/',
-          mic: 'bgv1'
+          mic: ''
         },
         {
           name: 'Kraig Loyd',
           avatar: 'https://api.adorable.io/avatars/122/',
-          mic: 'co-lead'
-        },
-        {
-          name: 'Jason Jackson II',
-          avatar: 'https://api.adorable.io/avatars/140/',
           mic: ''
         }
       ],
