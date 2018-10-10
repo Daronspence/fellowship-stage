@@ -41,12 +41,12 @@ export default {
         {
           name: 'Taylor Siemens',
           avatar: 'https://api.adorable.io/avatars/120/',
-          mic: 'lead'
+          mic: ''
         },
         {
           name: 'Alexandria Duarte',
           avatar: 'https://api.adorable.io/avatars/130/',
-          mic: 'bgv2'
+          mic: ''
         },
         {
           name: 'Sarah Roffler',
@@ -56,21 +56,16 @@ export default {
         {
           name: 'Myles Wren',
           avatar: 'https://api.adorable.io/avatars/131/',
-          mic: 'bgv3'
+          mic: ''
         },
         {
           name: 'Taylor Denton',
           avatar: 'https://api.adorable.io/avatars/132/',
-          mic: 'bgv1'
+          mic: ''
         },
         {
           name: 'Kraig Loyd',
           avatar: 'https://api.adorable.io/avatars/122/',
-          mic: 'co-lead'
-        },
-        {
-          name: 'Jason Jackson II',
-          avatar: 'https://api.adorable.io/avatars/140/',
           mic: ''
         }
       ],
