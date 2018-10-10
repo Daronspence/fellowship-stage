@@ -11,7 +11,7 @@
 
 <script>
 export default {
-    props: ['person', 'mics', 'changeMicValue', 'index'],
+    props: ['person', 'mics', 'index'],
     data: function(){
         return {
            
@@ -19,7 +19,7 @@ export default {
     },
     methods: {
         changeMic(e){
-            this.changeMicValue(e.target.value, this.index);
+            this.$emit('change-mic', e.target.value);
         }
     }
 }

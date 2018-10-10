@@ -14,7 +14,7 @@
     </div>
     <div id="singers">
       <draggable v-model="singers" class="flex justify-center py-8 flex-wrap">
-        <singer v-for="(singer, index) in singers" :key="singer.name" :person="singer" :mics="mics" :index="index" :change-mic-value="changeMicValue"></singer>
+        <singer v-for="(singer, index) in singers" :key="singer.name" :person="singer" :mics="mics" :index="index" @change-mic="changeMicValue($event, index)"></singer>
       </draggable>
     </div>
     <stage></stage>
