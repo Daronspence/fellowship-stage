@@ -2,10 +2,10 @@
   <div id="app" class="mx-auto max-w-2xl flex justify-center flex-col min-h-screen">
     <div id="band" class="flex justify-between mb-8">
       <div class="w-1/2 flex justify-start flex-wrap">
-        <person :person="getBandMember('bass')"></person>
-        <person :person="getBandMember('drums')"></person>
-        <person :person="getBandMember('piano')"></person>
-        <person :person="getBandMember('guitar')"></person>
+        <instrumentalist :person="getBandMember('bass')"></instrumentalist>
+        <instrumentalist :person="getBandMember('drums')"></instrumentalist>
+        <instrumentalist :person="getBandMember('piano')"></instrumentalist>
+        <instrumentalist :person="getBandMember('guitar')"></instrumentalist>
       </div>
       <div class="w-1/2 flex justify-end flex-wrap">
         <person :person="getBandMember('pads')"></person>
@@ -23,17 +23,19 @@
 
 <script>
 import draggable from 'vuedraggable'
-import singer from './components/Singer.vue'
 import person from './components/Person.vue'
+import singer from './components/Singer.vue'
+import instrumentalist from './components/Instrumentalist.vue'
 import stage from './components/Stage.vue'
 
 export default {
   name: 'app',
   components: {
     draggable,
-    singer,
     person,
-    stage
+    singer,
+    instrumentalist,
+    stage,
   },
   data: function() {
     return {
