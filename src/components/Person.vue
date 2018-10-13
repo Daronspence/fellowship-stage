@@ -1,8 +1,10 @@
 <template>
-    <div class="m-4 font-bold person text-center w-24" v-if="person">
-        <img :src="person.avatar" class="w-24 h-24 mb-2 rounded-full block" />
+    <div class="m-4 font-bold text-center w-24" v-if="person">
+        <slot name="avatar">
+            <img :src="person.avatar" class="w-24 h-24 mb-2 rounded-full block" />
+        </slot>
         <div>{{ person.name }}</div>
-        <div v-if="person.instrument" class="uppercase text-grey-darker text-xs">{{ person.instrument }}</div>
+        <slot></slot>
     </div>
 </template>
 

@@ -1,21 +1,19 @@
 <template>
-    <div class="m-4 font-bold singer flex flex-col items-center w-24 text-center justify-between">
-        <img :src="person.avatar" class="w-24 h-24 mb-2 rounded-full block" :class="`mic-${person.mic}`" />
-        <div class="mb-4">{{ person.name }}</div>
+    <person :person="person" class="flex flex-col items-center justify-between">
+        <img slot="avatar" :src="person.avatar" class="w-24 h-24 mb-2 rounded-full block" :class="`mic-${person.mic}`" />
         <select @change="changeMic" class="block w-24">
             <option value="">--</option>
             <option v-for="mic in mics" :value="mic" :key="mic" :selected="person.mic === mic">{{ mic }}</option>
         </select>
-    </div>
+    </person>
 </template>
 
 <script>
+import person from './Person.vue'
 export default {
     props: ['person', 'mics', 'index'],
-    data: function(){
-        return {
-           
-        }
+    components: {
+        person
     },
     methods: {
         changeMic(e){
