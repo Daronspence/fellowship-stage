@@ -1,5 +1,11 @@
 <template>
   <div id="app" class="mx-auto max-w-2xl flex justify-center flex-col min-h-screen">
+    <a href="https://fellowshipdallas.org" class="block absolute pin-b pin-l w-8 h-8 md:w-16 md:h-16 mb-2" target="_blank">
+      <img src="./assets/logo.png" alt="Fellowship Dallas" />
+    </a>
+    <a href="https://github.com/daronspence/fellowship-stage" class="block absolute pin-b pin-r w-8 h-8 md:w-16 md:h-16 mb-2 mr-2" target="_blank">
+      <img src="./assets/github.png" alt="Github Repo" />
+    </a>
     <div id="band" class="flex justify-between mb-8">
       <div class="w-1/2 flex justify-start flex-wrap">
         <instrumentalist :person="getBandMember('bass')"></instrumentalist>
@@ -8,8 +14,8 @@
         <instrumentalist :person="getBandMember('guitar')"></instrumentalist>
       </div>
       <div class="w-1/2 flex justify-end flex-wrap">
-        <person :person="getBandMember('pads')"></person>
-        <person :person="getBandMember('violin')"></person>
+        <instrumentalist :person="getBandMember('pads')"></instrumentalist>
+        <instrumentalist :person="getBandMember('violin')"></instrumentalist>
       </div>
     </div>
     <div id="singers">
