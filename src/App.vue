@@ -68,6 +68,7 @@ export default {
       deep: true,
       handler: function(val){
         if (this.seeded){
+          // eslint-disable-next-line
           console.log('setting singers in storage', val)
           window.localStorage.setItem('singers', JSON.stringify(val))
         }
@@ -153,8 +154,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-
-
-</style>
