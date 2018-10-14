@@ -8,14 +8,15 @@
     </a>
     <div id="band" class="flex justify-between mb-8">
       <div class="w-1/2 flex justify-start flex-wrap">
-        <instrumentalist :person="getBandMember('bass')"></instrumentalist>
-        <instrumentalist :person="getBandMember('drums')"></instrumentalist>
-        <instrumentalist :person="getBandMember('piano')"></instrumentalist>
-        <instrumentalist :person="getBandMember('guitar')"></instrumentalist>
+        <instrumentalist :person="getBandMember('Bass Guitar')"></instrumentalist>
+        <instrumentalist :person="getBandMember('Drums')"></instrumentalist>
+        <instrumentalist :person="getBandMember('Keys')"></instrumentalist>
+        <instrumentalist :person="getBandMember('Electric Guitar')"></instrumentalist>
+        <instrumentalist :person="getBandMember('Acoustic Guitar')"></instrumentalist>
       </div>
       <div class="w-1/2 flex justify-end flex-wrap">
-        <instrumentalist :person="getBandMember('pads')"></instrumentalist>
-        <instrumentalist :person="getBandMember('violin')"></instrumentalist>
+        <instrumentalist :person="getBandMember('Piano')"></instrumentalist>
+        <instrumentalist :person="getBandMember('Violin')"></instrumentalist>
       </div>
     </div>
     <div id="singers">
@@ -45,70 +46,9 @@ export default {
   },
   data: function() {
     return {
-      singers: [
-        {
-          name: 'Taylor Siemens',
-          avatar: 'https://api.adorable.io/avatars/120/',
-          mic: ''
-        },
-        {
-          name: 'Alexandria Duarte',
-          avatar: 'https://api.adorable.io/avatars/130/',
-          mic: ''
-        },
-        {
-          name: 'Sarah Roffler',
-          avatar: 'https://api.adorable.io/avatars/121/',
-          mic: ''
-        },
-        {
-          name: 'Myles Wren',
-          avatar: 'https://api.adorable.io/avatars/131/',
-          mic: ''
-        },
-        {
-          name: 'Taylor Denton',
-          avatar: 'https://api.adorable.io/avatars/132/',
-          mic: ''
-        },
-        {
-          name: 'Kraig Loyd',
-          avatar: 'https://api.adorable.io/avatars/122/',
-          mic: ''
-        }
-      ],
-      band: [
-        {
-          name: 'Joel',
-          instrument: 'bass',
-          avatar: 'https://api.adorable.io/avatars/123/'
-        },
-        {
-          name: 'Zeke',
-          instrument: 'pads',
-          avatar: "https://api.adorable.io/avatars/125/"
-        },
-        {
-          name: 'Gailey',
-          instrument: 'violin',
-          avatar: "https://api.adorable.io/avatars/126/"
-        },
-        {
-          name: 'Nigel',
-          instrument: 'piano',
-          avatar: "https://api.adorable.io/avatars/127/"
-        },
-        {
-          name: 'Emmanuel',
-          instrument: 'drums',
-          avatar: "https://api.adorable.io/avatars/128/"
-        },
-        {
-          name: 'Bob',
-          instrument: 'guitar',
-          avatar: "https://api.adorable.io/avatars/129/"
-        }
-      ],
+      seeded: false,
+      singers: [],
+      band: [],
       mics: [
         'lead', 'co-lead', 'bgv1', 'bgv2', 'bgv3', 'bgv4', 'bgv5', 'bgv6'
       ],
@@ -127,49 +67,89 @@ export default {
     singers: {
       deep: true,
       handler: function(val){
-        window.localStorage.setItem('singers', JSON.stringify(val));
+        if (this.seeded){
+          console.log('setting singers in storage', val)
+          window.localStorage.setItem('singers', JSON.stringify(val))
+        }
       }
     }
   },
   created: function(){
-    let oldSingers = JSON.parse(window.localStorage.getItem('singers'));
+    var that = this;
+    fetch('/.netlify/functions/fetchTeam')
+      .then(function(response) {
+        return response.text();
+      })
+      .then(function(body){
+        let r = JSON.parse(body);
+        // console.log(r);
+        
+        let bandTeam = r.included.find(team => team.attributes.name === "Worship Band");
+        let singersTeam = r.included.find(team => team.attributes.name === "Front Line Worship Singers")
+
+        let bandMembers = r.data.filter(member => member.relationships.team.data.id === bandTeam.id);
+
+        let singers = r.data.filter(member => member.relationships.team.data.id === singersTeam.id);
+
+        that.band = bandMembers.map(member => {
+          return {
+            name: member.attributes.name,
+            instrument: member.attributes.team_position_name,
+            avatar: member.attributes.photo_thumbnail
+          }
+        })
+
+        that.singers = singers.map(singer => {
+          return {
+            name: singer.attributes.name,
+            avatar: singer.attributes.photo_thumbnail,
+            mic: ''
+          }
+        })
+
+        let oldSingers = JSON.parse(window.localStorage.getItem('singers'));
     
-    if (!oldSingers)
-      return;
+        if (!oldSingers)
+          return;
 
-    this.singers.forEach( singer => {
-      var old = oldSingers.find(person => person.name === singer.name);
-      if ( old ){
-        singer.mic = old.mic;
-      }
-    });
+        that.singers.forEach( singer => {
+          var old = oldSingers.find(person => person.name === singer.name);
+          if ( old ){
+            singer.mic = old.mic;
+          }
+        });
 
-    let oldSingersThatAreCurrentSingers = [];
-    let singersCopy = JSON.parse(JSON.stringify(this.singers));
+        let oldSingersThatAreCurrentSingers = [];
+        let singersCopy = JSON.parse(JSON.stringify(that.singers));
 
-    // if current singer exactly matches old value, store it
-    singersCopy.forEach(singer => {
-      var target = singer;
-      var targetKeys = Object.keys(target);
-      var index = oldSingers.findIndex(function(entry) {
-          var keys = Object.keys(entry);
-          return keys.length == targetKeys.length && keys.every(function(key) {
-              return target.hasOwnProperty(key) && entry[key] === target[key];
+        // if current singer exactly matches old value, store it
+        singersCopy.forEach(singer => {
+          var target = singer;
+          var targetKeys = Object.keys(target);
+          var index = oldSingers.findIndex(function(entry) {
+              var keys = Object.keys(entry);
+              return keys.length == targetKeys.length && keys.every(function(key) {
+                  return target.hasOwnProperty(key) && entry[key] === target[key];
+              });
           });
-      });
-      if (index !== -1){
-        oldSingersThatAreCurrentSingers.push(singer);
-      }
-    });
+          if (index !== -1){
+            oldSingersThatAreCurrentSingers.push(singer);
+          }
+        });
 
-    // if all old singers are current singers, set old singers as current singers
-    if ((this.singers.length === oldSingersThatAreCurrentSingers.length) && (this.singers.length === oldSingers.length)){
-      this.singers = oldSingers;
-    } else {
-      // eslint-disable-next-line
-      console.log('Singers did not match, ignoring order.');
-    }
-      
+        // if all old singers are current singers, set old singers as current singers
+        if ((that.singers.length === oldSingersThatAreCurrentSingers.length) && (that.singers.length === oldSingers.length)){
+          that.singers = oldSingers;
+        } else {
+          // eslint-disable-next-line
+          console.log('Singers did not match, ignoring order.');
+        }
+
+        that.$nextTick(function(){
+          that.seeded = true;
+        });
+
+      })
   }
 }
 </script>
