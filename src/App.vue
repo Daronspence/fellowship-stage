@@ -83,7 +83,6 @@ export default {
       })
       .then(function(body){
         let r = JSON.parse(body);
-        // console.log(r);
         
         let bandTeam = r.included.find(team => team.attributes.name === "Worship Band");
         let singersTeam = r.included.find(team => team.attributes.name === "Front Line Worship Singers")
@@ -110,8 +109,10 @@ export default {
 
         let oldSingers = JSON.parse(window.localStorage.getItem('singers'));
     
-        if (!oldSingers)
+        if (!oldSingers){
+          that.seeded = true;
           return;
+        }
 
         that.singers.forEach( singer => {
           var old = oldSingers.find(person => person.name === singer.name);
