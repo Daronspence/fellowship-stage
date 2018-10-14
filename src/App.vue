@@ -10,12 +10,12 @@
       <div class="w-1/2 flex justify-start flex-wrap">
         <instrumentalist :person="getBandMember('Bass Guitar')"></instrumentalist>
         <instrumentalist :person="getBandMember('Drums')"></instrumentalist>
-        <instrumentalist :person="getBandMember('Keys')"></instrumentalist>
+        <instrumentalist :person="getBandMember('Piano')"></instrumentalist>
         <instrumentalist :person="getBandMember('Electric Guitar')"></instrumentalist>
         <instrumentalist :person="getBandMember('Acoustic Guitar')"></instrumentalist>
       </div>
       <div class="w-1/2 flex justify-end flex-wrap">
-        <instrumentalist :person="getBandMember('Piano')"></instrumentalist>
+        <instrumentalist :person="getBandMember('Pads')"></instrumentalist>
         <instrumentalist :person="getBandMember('Violin')"></instrumentalist>
       </div>
     </div>
