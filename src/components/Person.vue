@@ -1,5 +1,5 @@
 <template>
-    <div class="m-4 font-bold text-center w-24" v-if="person">
+    <div class="m-4 font-bold text-center w-24" v-if="person && person.visible">
         <slot name="avatar">
             <img :src="person.avatar" class="w-24 h-24 mb-2 rounded-full block" />
         </slot>
@@ -11,10 +11,5 @@
 <script>
 export default {
     props: ['person'],
-    data: function(){
-        return {
-           
-        }
-    }
 }
 </script>

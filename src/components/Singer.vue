@@ -43,7 +43,7 @@ export default {
         }
 
         &-bgv1 {
-            border-color: gold;
+            border-color: saddlebrown;
         }
 
         &-bgv2 {

@@ -11,7 +11,7 @@ const url = "https://api.planningcenteronline.com/services/v2/service_types/5456
 
 const instance = axios.create({
     baseURL: 'https://api.planningcenteronline.com/services/v2',
-    timeout: 1000,
+    timeout: 3000,
     // headers: {'Authorization': 'Basic ' + new Buffer(username + ':' + passw).toString('base64') },
     auth: {
         username: username,
@@ -23,22 +23,29 @@ const instance = axios.create({
 exports.handler = (event, context, callback) => {
     instance.get('service_types/54564/plans?filter=future')
         .then(function(response){
-            // console.log(response.data)
+            // console.log(response)
             // console.log(event) // info about the request
-
-            let nextServiceId = response.data.data[0].id || null;
-            if (nextServiceId) {
-                instance.get(`service_types/54564/plans/${nextServiceId}/team_members?include=team`)
-                    .then(function(response){
-                        callback(null, {
-                            statusCode: 200,
-                            body: JSON.stringify(response.data),
-                        });
-                    })
-                    .catch(function(error){
-                        callback(error)
-                    })
+            if ( response.status === 200 ){
+                let nextServiceId = response.data.data[0].id || null;
+                if (nextServiceId) {
+                    instance.get(`service_types/54564/plans/${nextServiceId}/team_members?include=team&per_page=100`)
+                        .then(function(response){
+                            callback(null, {
+                                statusCode: 200,
+                                body: JSON.stringify(response.data),
+                            });
+                        })
+                        .catch(function(error){
+                            callback(error)
+                        })
+                }
+            } else {
+                callback(null, {
+                    statusCode: response.status,
+                    body: JSON.stringify(response.data)
+                })
             }
+
         })
         .catch(function(error){
             callback(error)

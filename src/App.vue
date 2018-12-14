@@ -1,30 +1,46 @@
 <template>
-  <div id="app" class="mx-auto max-w-2xl flex justify-center flex-col min-h-screen">
-    <a href="https://fellowshipdallas.org" class="block absolute pin-b pin-l w-8 h-8 md:w-16 md:h-16 mb-2" target="_blank">
-      <img src="./assets/logo.png" alt="Fellowship Dallas" />
-    </a>
-    <a href="https://github.com/daronspence/fellowship-stage" class="block absolute pin-b pin-r w-8 h-8 md:w-16 md:h-16 mb-2 mr-2" target="_blank">
-      <img src="./assets/github.png" alt="Github Repo" />
-    </a>
-    <div id="band" class="flex justify-between mb-8">
-      <div class="w-1/2 flex justify-start flex-wrap">
-        <instrumentalist :person="getBandMember('Bass Guitar')"></instrumentalist>
-        <instrumentalist :person="getBandMember('Drums')"></instrumentalist>
-        <instrumentalist :person="getBandMember('Piano')"></instrumentalist>
-        <instrumentalist :person="getBandMember('Electric Guitar')"></instrumentalist>
-        <instrumentalist :person="getBandMember('Acoustic Guitar')"></instrumentalist>
+  <div id="app">
+    <div>
+      <div v-if="singers.length || band.length">
+        <div class="mx-auto max-w-2xl flex justify-center flex-col min-h-screen">
+          <a href="https://fellowshipdallas.org" class="block absolute pin-b pin-l w-8 h-8 md:w-16 md:h-16 mb-2" target="_blank">
+            <img src="./assets/logo.png" alt="Fellowship Dallas" />
+          </a>
+          <a href="https://github.com/daronspence/fellowship-stage" class="block absolute pin-b pin-r w-8 h-8 md:w-16 md:h-16 mb-2 mr-2" target="_blank">
+            <img src="./assets/github.png" alt="Github Repo" />
+          </a>
+          <div id="band" class="flex justify-between mb-8">
+            <div class="w-1/2 flex justify-start flex-wrap">
+              <instrumentalist :person="getBandMember('Bass Guitar')"></instrumentalist>
+              <instrumentalist :person="getBandMember('Drums')"></instrumentalist>
+              <instrumentalist :person="getBandMember('Piano')"></instrumentalist>
+              <instrumentalist :person="getBandMember('Electric Guitar')"></instrumentalist>
+              <instrumentalist :person="getBandMember('Acoustic Guitar')"></instrumentalist>
+            </div>
+            <div class="w-1/2 flex justify-end flex-wrap">
+              <instrumentalist :person="getBandMember('Pads')"></instrumentalist>
+              <instrumentalist :person="getBandMember('Violin')"></instrumentalist>
+            </div>
+          </div>
+          <dropdown-toggle button-text="Filter Band">
+            <people-filter class="mb-4" v-model="band"></people-filter>
+          </dropdown-toggle>
+          <div id="singers">
+            <draggable v-model="singers" class="flex justify-center py-8 flex-wrap">
+              <singer v-for="(singer, index) in singers" :key="singer.name" :person="singer" :mics="mics" :index="index" @change-mic="changeMicValue($event, index)"></singer>
+            </draggable>
+            <dropdown-toggle button-text="Filter Singers">
+              <people-filter class="mb-4" v-model="singers"></people-filter>
+            </dropdown-toggle>
+          </div>
+          <stage></stage>
+        </div>
       </div>
-      <div class="w-1/2 flex justify-end flex-wrap">
-        <instrumentalist :person="getBandMember('Pads')"></instrumentalist>
-        <instrumentalist :person="getBandMember('Violin')"></instrumentalist>
+      <div v-else class="flex justify-center min-h-screen items-center max-w-2xl mx-auto">
+        <p v-if="seeded">Failed to load data. Make sure people are assigned and have accepted positions for your next upcoming event.</p>
+        <p v-else>Loading...</p>
       </div>
     </div>
-    <div id="singers">
-      <draggable v-model="singers" class="flex justify-center py-8 flex-wrap">
-        <singer v-for="(singer, index) in singers" :key="singer.name" :person="singer" :mics="mics" :index="index" @change-mic="changeMicValue($event, index)"></singer>
-      </draggable>
-    </div>
-    <stage></stage>
   </div>
 </template>
 
@@ -34,6 +50,8 @@ import person from './components/Person.vue'
 import singer from './components/Singer.vue'
 import instrumentalist from './components/Instrumentalist.vue'
 import stage from './components/Stage.vue'
+import peopleFilter from './components/PeopleFilter.vue'
+import dropdownToggle from './components/DropdownToggle.vue'
 
 export default {
   name: 'app',
@@ -43,6 +61,8 @@ export default {
     singer,
     instrumentalist,
     stage,
+    peopleFilter,
+    dropdownToggle
   },
   data: function() {
     return {
@@ -82,20 +102,22 @@ export default {
         return response.text();
       })
       .then(function(body){
+        // r = response
         let r = JSON.parse(body);
         
         let bandTeam = r.included.find(team => team.attributes.name === "Worship Band");
         let singersTeam = r.included.find(team => team.attributes.name === "Front Line Worship Singers")
 
-        let bandMembers = r.data.filter(member => member.relationships.team.data.id === bandTeam.id);
+        let bandMembers = r.data.filter(member => member.relationships.team.data.id === bandTeam.id && member.attributes.status === "C");
 
-        let singers = r.data.filter(member => member.relationships.team.data.id === singersTeam.id);
+        let singers = r.data.filter(member => member.relationships.team.data.id === singersTeam.id && member.attributes.status === "C");
 
         that.band = bandMembers.map(member => {
           return {
             name: member.attributes.name,
             instrument: member.attributes.team_position_name,
-            avatar: member.attributes.photo_thumbnail
+            avatar: member.attributes.photo_thumbnail,
+            visible: true
           }
         })
 
@@ -103,7 +125,8 @@ export default {
           return {
             name: singer.attributes.name,
             avatar: singer.attributes.photo_thumbnail,
-            mic: ''
+            mic: '',
+            visible: true
           }
         })
 
@@ -118,6 +141,7 @@ export default {
           var old = oldSingers.find(person => person.name === singer.name);
           if ( old ){
             singer.mic = old.mic;
+            singer.visible = old.visible ? true : false;
           }
         });
 
